@@ -17,7 +17,7 @@ const warnaBuahan = [
   "#FF3B3F", // Warna untuk Semangka
   "#98E2C6", // Warna untuk Melon
   "#4B0082", // Warna untuk Anggur
-  "#FFD700", // Warna untuk Nanas
+  "#FFD700", // Warna untuk Nanas (sama dengan Mangga untuk contoh ini)
 ];
 
 function tampilkanBuah(index) {
@@ -29,24 +29,25 @@ function tampilkanBuah(index) {
   document.body.style.backgroundColor = warnaBuahan[index];
 }
 
-function tampilkanBuahBerdasarkanDetik() {
+function tampilkanBuahBerdasarkanMenit() {
   const waktuSaatIni = new Date();
-  const totalDetik =
-    waktuSaatIni.getHours() * 3600 +
-    waktuSaatIni.getMinutes() * 60 +
-    waktuSaatIni.getSeconds();
-  const indexBuah = totalDetik % buahBuahan.length;
+  const totalMenit = waktuSaatIni.getHours() * 60 + waktuSaatIni.getMinutes();
+  const indexBuah = totalMenit % buahBuahan.length;
   tampilkanBuah(indexBuah);
 }
 
-function aturTimerUntukDetikBerikutnya() {
+function aturTimerUntukMenitBerikutnya() {
+  const waktuSaatIni = new Date();
+  const milidetikHinggaMenitBerikutnya =
+    (60 - waktuSaatIni.getSeconds()) * 1000;
+
   setTimeout(() => {
-    tampilkanBuahBerdasarkanDetik();
-    aturTimerUntukDetikBerikutnya();
-  }, 1000);
+    tampilkanBuahBerdasarkanMenit();
+    aturTimerUntukMenitBerikutnya();
+  }, milidetikHinggaMenitBerikutnya);
 }
 
-// Panggil fungsi berdasarkan detik saat halaman dimuat
-tampilkanBuahBerdasarkanDetik();
-// Atur timer untuk memperbarui tampilan setiap detik
-aturTimerUntukDetikBerikutnya();
+// Panggil fungsi berdasarkan menit saat halaman dimuat
+tampilkanBuahBerdasarkanMenit();
+// Atur timer untuk memperbarui tampilan pada awal menit berikutnya
+aturTimerUntukMenitBerikutnya();
