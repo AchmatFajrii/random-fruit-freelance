@@ -17,8 +17,24 @@ const warnaBuahan = [
   "#FF3B3F", // Warna untuk Semangka
   "#98E2C6", // Warna untuk Melon
   "#4B0082", // Warna untuk Anggur
-  "#FFD700", // Warna untuk Nanas (sama dengan Mangga untuk contoh ini)
+  "#FFD700", // Warna untuk Nanas
 ];
+
+function acakArray(seed, array) {
+  const result = [...array];
+  let m = result.length,
+    t,
+    i;
+
+  while (m) {
+    seed = (seed * 9301 + 49297) % 233280; // formula pseudo-random
+    i = Math.floor((seed * m--) / 233280); // memastikan indeks adalah bilangan bulat
+    t = result[m];
+    result[m] = result[i];
+    result[i] = t;
+  }
+  return result;
+}
 
 function tampilkanBuah(index) {
   const buahTerpilih = buahBuahan[index];
@@ -29,25 +45,25 @@ function tampilkanBuah(index) {
   document.body.style.backgroundColor = warnaBuahan[index];
 }
 
-function tampilkanBuahBerdasarkanMenit() {
+function tampilkanBuahBerdasarkanWaktu() {
   const waktuSaatIni = new Date();
-  const totalMenit = waktuSaatIni.getHours() * 60 + waktuSaatIni.getMinutes();
-  const indexBuah = totalMenit % buahBuahan.length;
+  const seed = waktuSaatIni.getSeconds() / 60;
+  const urutanAcak = acakArray(
+    seed,
+    Array.from({ length: buahBuahan.length }, (_, i) => i)
+  );
+  const indexBuah = urutanAcak[0];
   tampilkanBuah(indexBuah);
 }
 
-function aturTimerUntukMenitBerikutnya() {
-  const waktuSaatIni = new Date();
-  const milidetikHinggaMenitBerikutnya =
-    (60 - waktuSaatIni.getSeconds()) * 1000;
-
+function aturTimerUntukDetikBerikutnya() {
   setTimeout(() => {
-    tampilkanBuahBerdasarkanMenit();
-    aturTimerUntukMenitBerikutnya();
-  }, milidetikHinggaMenitBerikutnya);
+    tampilkanBuahBerdasarkanWaktu();
+    aturTimerUntukDetikBerikutnya();
+  }, 1000);
 }
 
-// Panggil fungsi berdasarkan menit saat halaman dimuat
-tampilkanBuahBerdasarkanMenit();
-// Atur timer untuk memperbarui tampilan pada awal menit berikutnya
-aturTimerUntukMenitBerikutnya();
+// Panggil fungsi berdasarkan detik saat halaman dimuat
+tampilkanBuahBerdasarkanWaktu();
+// Atur timer untuk memperbarui tampilan setiap detik
+aturTimerUntukDetikBerikutnya();
