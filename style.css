@@ -1,31 +1,37 @@
 body {
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #f4f4f4;
   transition: all 0.5s ease;
+  margin: 0;
+  padding: 0;
 }
 
-#buahTerpilih {
-  font-size: 2.5vw; /* Ubah ukuran font menjadi responsif terhadap lebar viewport */
-  padding: 2vw; /* Ubah padding menjadi responsif */
+#daftarBuah {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 kolom dengan lebar yang sama */
+  gap: 1vw; /* jarak antara setiap item grid */
+  max-width: 90%;
+  margin: 5% auto;
+}
+
+.buah {
+  font-size: 1.2vw;
+  padding: 1vw;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
-  text-align: center; /* Tambahkan ini untuk memastikan teks selalu terpusat */
-  max-width: 90%; /* Batasi lebar maksimal agar konten tidak melebar terlalu jauh di layar lebar */
+  text-align: center;
 }
 
-#buahTerpilih:hover {
+.buah:hover {
   transform: scale(1.05);
 }
 
 /* Media query untuk layar kecil */
 @media only screen and (max-width: 600px) {
-  #buahTerpilih {
-    font-size: 5vw; /* Ukuran font lebih besar untuk layar kecil */
-    padding: 3vw;
+  .buah {
+    font-size: 2.5vw;
+    padding: 1.5vw;
   }
 }
