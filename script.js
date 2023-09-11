@@ -72,6 +72,13 @@ function tampilkanBuahBerdasarkanWaktu() {
 
   document.body.style.backgroundColor =
     warnaBuahan[buahBuahan.indexOf(seluruhBuah[0])];
+
+  if (modeUpdate === "limaMenit") {
+    setTimeout(() => {
+      tampilkanBuahBerdasarkanWaktu();
+      aturTimerBerdasarkanMode();
+    }, 300000);
+  }
 }
 
 function aturTimerBerdasarkanMode() {
