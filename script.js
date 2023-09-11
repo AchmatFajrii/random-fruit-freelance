@@ -10,25 +10,26 @@ const buahBuahan = [
 ];
 
 const warnaBuahan = [
-  "#D0E9D7", // Warna untuk Apel
-  "#FFE135", // Warna untuk Pisang
-  "#FFA500", // Warna untuk Jeruk
-  "#FFD700", // Warna untuk Mangga
-  "#FF3B3F", // Warna untuk Semangka
-  "#98E2C6", // Warna untuk Melon
-  "#4B0082", // Warna untuk Anggur
-  "#FFD700", // Warna untuk Nanas
+  "#D0E9D7",
+  "#FFE135",
+  "#FFA500",
+  "#FFD700",
+  "#FF3B3F",
+  "#98E2C6",
+  "#4B0082",
+  "#FFD700",
 ];
+
+const modeUpdate = "limaMenit"; // Pilih antara "detik", "limaMenit", atau "satuJam"
 
 function acakArray(seed, array) {
   const result = [...array];
   let m = result.length,
     t,
     i;
-
   while (m) {
-    seed = (seed * 9301 + 49297) % 233280; // formula pseudo-random
-    i = Math.floor((seed * m--) / 233280); // memastikan indeks adalah bilangan bulat
+    seed = (seed * 9301 + 49297) % 233280;
+    i = Math.floor((seed * m--) / 233280);
     t = result[m];
     result[m] = result[i];
     result[i] = t;
@@ -36,125 +37,62 @@ function acakArray(seed, array) {
   return result;
 }
 
-function tampilkanBuah(index) {
-  const buahTerpilih = buahBuahan[index];
-  const elemenBuah = document.querySelector("#buahTerpilih");
-  elemenBuah.innerText = buahTerpilih;
-
-  // Mengatur warna latar belakang sesuai dengan buah yang dipilih
-  document.body.style.backgroundColor = warnaBuahan[index];
-}
-
 function tampilkanBuahBerdasarkanWaktu() {
   const waktuSaatIni = new Date();
-  const seed = waktuSaatIni.getSeconds() / 60;
+  let seed;
 
-  // Membuat array besar yang berisi buah-buahan berulang-ulang
+  switch (modeUpdate) {
+    case "detik":
+      seed =
+        waktuSaatIni.getSeconds() +
+        waktuSaatIni.getMinutes() * 60 +
+        waktuSaatIni.getHours() * 3600;
+      break;
+    case "limaMenit":
+      seed = Math.floor(waktuSaatIni.getMinutes() / 5);
+      break;
+    case "satuJam":
+      seed = waktuSaatIni.getHours();
+      break;
+  }
+
   let buahBesar = [];
   while (buahBesar.length < 50) {
     buahBesar = buahBesar.concat(buahBuahan);
   }
 
-  // Mengacak array besar tersebut
   const urutanAcak = acakArray(seed, buahBesar);
+  const seluruhBuah = urutanAcak.slice(0, 50);
 
-  // Mengambil 50 buah pertama dari array yang telah diacak
-  const buah50 = urutanAcak.slice(0, 50);
+  // Loop melalui setiap buah dan perbarui kontennya
+  for (let i = 0; i < seluruhBuah.length; i++) {
+    const elemenBuah = document.querySelector(`#buah${i + 1}`);
+    elemenBuah.textContent = seluruhBuah[i];
+  }
 
-  const elemenDaftarBuah = document.querySelector("#daftarBuah");
-  elemenDaftarBuah.innerHTML = buah50
-    .map((buah) => `<div class="buah">${buah}</div>`)
-    .join("");
-
-  // Mengatur warna latar belakang sesuai dengan buah pertama yang dipilih
   document.body.style.backgroundColor =
-    warnaBuahan[buahBuahan.indexOf(buah50[0])];
+    warnaBuahan[buahBuahan.indexOf(seluruhBuah[0])];
 }
 
-function aturTimerUntukDetikBerikutnya() {
+function aturTimerBerdasarkanMode() {
+  let waktu;
+  switch (modeUpdate) {
+    case "detik":
+      waktu = 1000;
+      break;
+    case "limaMenit":
+      waktu = 300000;
+      break;
+    case "satuJam":
+      waktu = 3600000;
+      break;
+  }
+
   setTimeout(() => {
     tampilkanBuahBerdasarkanWaktu();
-    aturTimerUntukDetikBerikutnya();
-  }, 1000);
+    aturTimerBerdasarkanMode();
+  }, waktu);
 }
 
-// Panggil fungsi berdasarkan detik saat halaman dimuat
 tampilkanBuahBerdasarkanWaktu();
-// Atur timer untuk memperbarui tampilan setiap detik
-aturTimerUntukDetikBerikutnya();
-
-// PERJAM
-
-// const buahBuahan = [
-//   "Apel🍏",
-//   "Pisang🍌",
-//   "Jeruk🍊",
-//   "Mangga🥭",
-//   "Semangka🍉",
-//   "Melon🍈",
-//   "Anggur🍇",
-//   "Nanas🍍",
-// ];
-
-// const warnaBuahan = [
-//   "#D0E9D7", // Warna untuk Apel
-//   "#FFE135", // Warna untuk Pisang
-//   "#FFA500", // Warna untuk Jeruk
-//   "#FFD700", // Warna untuk Mangga
-//   "#FF3B3F", // Warna untuk Semangka
-//   "#98E2C6", // Warna untuk Melon
-//   "#4B0082", // Warna untuk Anggur
-//   "#FFD700", // Warna untuk Nanas
-// ];
-
-// function acakArray(seed, array) {
-//   const result = [...array];
-//   let m = result.length,
-//     t,
-//     i;
-
-//   while (m) {
-//     seed = (seed * 9301 + 49297) % 233280; // formula pseudo-random
-//     i = Math.floor((seed * m--) / 233280); // memastikan indeks adalah bilangan bulat
-//     t = result[m];
-//     result[m] = result[i];
-//     result[i] = t;
-//   }
-//   return result;
-// }
-
-// function tampilkanBuah(index) {
-//   const buahTerpilih = buahBuahan[index];
-//   const elemenBuah = document.querySelector("#buahTerpilih");
-//   elemenBuah.innerText = buahTerpilih;
-
-//   // Mengatur warna latar belakang sesuai dengan buah yang dipilih
-//   document.body.style.backgroundColor = warnaBuahan[index];
-// }
-
-// function tampilkanBuahBerdasarkanWaktu() {
-//   const waktuSaatIni = new Date();
-//   const seed = waktuSaatIni.getHours();
-//   const urutanAcak = acakArray(
-//     seed,
-//     Array.from({ length: buahBuahan.length }, (_, i) => i)
-//   );
-//   const indexBuah = urutanAcak[0];
-//   tampilkanBuah(indexBuah);
-// }
-
-// function aturTimerUntukJamBerikutnya() {
-//   const waktuSaatIni = new Date();
-//   const milidetikHinggaJamBerikutnya =
-//     (3600 - waktuSaatIni.getMinutes() * 60 - waktuSaatIni.getSeconds()) * 1000;
-
-//   setTimeout(() => {
-//     tampilkanBuahBerdasarkanWaktu();
-//     aturTimerUntukJamBerikutnya();
-//   }, milidetikHinggaJamBerikutnya);
-// }
-
-// // Panggil fungsi berdasarkan jam saat halaman dimuat
-// tampilkanBuahBerdasarkanWaktu();
-// // Atur timer untuk memperbarui tampilan pada awal jam berikutnya
-// aturTimerUntukJamBerikutnya();
+aturTimerBerdasarkanMode();
