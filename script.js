@@ -29,7 +29,7 @@ const updateWaktu = [
 const daftarPersen = ["70%", "80%", "90%", "50%", "35%"];
 
 // Pilihan mode update: detik, limaMenit, atau satuJam.
-const modeUpdate = "detik"; // Pilih antara "detik", "limaMenit", atau "satuJam"
+const modeUpdate = "limaMenit"; // Pilih antara "detik", "limaMenit", atau "satuJam"
 
 // Durasi timeout untuk setiap mode update.
 const TIMEOUTS = {
