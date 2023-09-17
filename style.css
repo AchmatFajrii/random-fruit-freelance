@@ -6,7 +6,7 @@ body {
   padding: 0;
 }
 
-#daftarBuah {
+#daftarBuah, #daftarWaktu, #daftarPersen {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 kolom dengan lebar yang sama */
   gap: 1vw; /* jarak antara setiap item grid */
@@ -14,7 +14,7 @@ body {
   margin: 5% auto;
 }
 
-.buah {
+.buah, .waktu, .persen {
   font-size: 1.2vw;
   padding: 1vw;
   border-radius: 8px;
@@ -24,13 +24,13 @@ body {
   text-align: center;
 }
 
-.buah:hover {
+.buah:hover, .waktu:hover, .persen:hover {
   transform: scale(1.05);
 }
 
 /* Media query untuk layar kecil */
 @media only screen and (max-width: 600px) {
-  .buah {
+  .buah, .waktu, .persen {
     font-size: 2.5vw;
     padding: 1.5vw;
   }
