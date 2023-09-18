@@ -105,9 +105,9 @@ function displayData(selectorPrefix, dataArray) {
 }
 
 function setBarColor(persen) {
-  if (persen < 40) return "red";
-  else if (persen < 70) return "yellow";
-  else return "green";
+  if (persen < 40) return "#CD1818";
+  else if (persen < 70) return "#F6C90E";
+  else return "#0B6623";
 }
 
 function displayBarProgres() {
