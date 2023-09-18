@@ -6,15 +6,19 @@ body {
   padding: 0;
 }
 
-#daftarBuah, #daftarWaktu, #daftarPersen {
+#daftarBuah,
+#daftarWaktu,
+#daftarPersen {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 kolom dengan lebar yang sama */
-  gap: 1vw; /* jarak antara setiap item grid */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vw;
   max-width: 90%;
   margin: 5% auto;
 }
 
-.buah, .waktu, .persen {
+.buah,
+.waktu,
+.persen {
   font-size: 1.2vw;
   padding: 1vw;
   border-radius: 8px;
@@ -24,14 +28,71 @@ body {
   text-align: center;
 }
 
-.buah:hover, .waktu:hover, .persen:hover {
+.buah:hover,
+.waktu:hover,
+.persen:hover {
   transform: scale(1.05);
 }
 
-/* Media query untuk layar kecil */
+#daftarBarProgres {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  max-width: 90%;
+  margin: 5% auto;
+}
+
+.barProgres {
+  height: 1.5vw;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.barProgres > div {
+  height: 100%;
+  width: 0%;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  /* Efek strip dan gradien */
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  transition: width 0.6s ease;
+  -webkit-animation: progress-bar-stripes 1s linear infinite;
+  animation: progress-bar-stripes 1s linear infinite;
+  z-index: 10;
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 1rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
 @media only screen and (max-width: 600px) {
-  .buah, .waktu, .persen {
-    font-size: 2.5vw;
-    padding: 1.5vw;
+  .buah,
+  .waktu,
+  .persen {
+    font-size: 3.5vw;
+    padding: 2.5vw;
+  }
+
+  .barProgres {
+    height: 4vw;
   }
 }

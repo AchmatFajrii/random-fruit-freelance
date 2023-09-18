@@ -28,6 +28,16 @@ const updateWaktu = [
 ];
 const daftarPersen = ["70%", "80%", "90%", "50%", "35%"];
 
+const daftarPersenBar = [
+  "30,2%",
+  "65,7%",
+  "95%",
+  "54,2%",
+  "12,5%",
+  "27%",
+  "85%",
+]; // Contoh persentase baru untuk bar progres
+
 // Pilihan mode update: detik, limaMenit, atau satuJam.
 const modeUpdate = "limaMenit"; // Pilih antara "detik", "limaMenit", atau "satuJam"
 
@@ -94,11 +104,40 @@ function displayData(selectorPrefix, dataArray) {
   });
 }
 
+function setBarColor(persen) {
+  if (persen < 40) return "red";
+  else if (persen < 70) return "yellow";
+  else return "green";
+}
+
+function displayBarProgres() {
+  const seed = generateSeed();
+  const randomizedData = acakArray(seed, daftarPersenBar).slice(0, 3);
+  randomizedData.forEach((data, idx) => {
+    const element = document.querySelector(`#barProgres${idx + 1}`);
+    const dataDecimal = data.replace(",", "."); // Ganti koma dengan titik
+    const persenFloat = parseFloat(dataDecimal); // Konversi ke float
+
+    const color = setBarColor(persenFloat);
+
+    const fill = document.createElement("div");
+    fill.style.width = `${persenFloat}%`; // Menggunakan persentase dalam format desimal untuk menentukan lebar
+    fill.style.backgroundColor = color;
+    fill.textContent = data; // Menggunakan format asli (dengan koma) untuk teks
+    fill.style.display = "flex";
+    fill.style.alignItems = "center";
+    fill.style.justifyContent = "center";
+    element.innerHTML = "";
+    element.appendChild(fill);
+  });
+}
+
 // Fungsi utama untuk menampilkan buah, waktu, dan persentase berdasarkan waktu saat ini.
 function tampilkanBuahBerdasarkanWaktu() {
   displayData("buah", buahBuahan);
   displayData("waktu", updateWaktu);
   displayData("persen", daftarPersen);
+  displayBarProgres();
 
   // Mengubah warna latar belakang berdasarkan buah pertama yang terpilih.
   const seluruhBuah = acakArray(generateSeed(), buahBuahan);
