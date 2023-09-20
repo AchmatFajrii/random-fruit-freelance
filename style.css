@@ -42,6 +42,8 @@ body {
   margin: 5% auto;
 }
 
+/* ... kode CSS sebelumnya ... */
+
 .barProgres {
   height: 1.5vw;
   background-color: #e0e0e0;
@@ -49,13 +51,13 @@ body {
   position: relative;
 }
 
-.barProgres > div {
+.barProgres-fill {
   height: 100%;
-  width: 0%;
+  width: 0%; /* Ini akan diubah oleh JavaScript */
   position: absolute;
   left: 0;
   top: 0;
-
+  z-index: 10;
   /* Efek strip dan gradien */
   background-image: linear-gradient(
     45deg,
@@ -71,7 +73,19 @@ body {
   transition: width 0.6s ease;
   -webkit-animation: progress-bar-stripes 1s linear infinite;
   animation: progress-bar-stripes 1s linear infinite;
-  z-index: 10;
+}
+
+.barProgres-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  font-size: 1vw;
+  color: #000;
+  pointer-events: none;
+  width: 100%;
+  text-align: center;
 }
 
 @keyframes progress-bar-stripes {
@@ -93,5 +107,8 @@ body {
 
   .barProgres {
     height: 4vw;
+  }
+  .barProgres-text {
+    font-size: 0.8rem; /* Anda dapat menyesuaikan ukuran font untuk layar kecil */
   }
 }

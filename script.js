@@ -120,15 +120,18 @@ function displayBarProgres() {
 
     const color = setBarColor(persenFloat);
 
+    // Buat elemen untuk mengisi bar progres
     const fill = document.createElement("div");
-    fill.style.width = `${persenFloat}%`; // Menggunakan persentase dalam format desimal untuk menentukan lebar
+    fill.className = "barProgres-fill";
+    fill.style.width = `${persenFloat}%`;
     fill.style.backgroundColor = color;
-    fill.textContent = data; // Menggunakan format asli (dengan koma) untuk teks
-    fill.style.display = "flex";
-    fill.style.alignItems = "center";
-    fill.style.justifyContent = "center";
-    element.innerHTML = "";
+    element.innerHTML = ""; // Bersihkan elemen sebelumnya
     element.appendChild(fill);
+    // Buat elemen teks untuk menampilkan persentase
+    const textElement = document.createElement("div");
+    textElement.textContent = data; // Menggunakan format asli (dengan koma) untuk teks
+    textElement.className = "barProgres-text";
+    element.appendChild(textElement);
   });
 }
 
