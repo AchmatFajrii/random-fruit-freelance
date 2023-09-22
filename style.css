@@ -88,6 +88,28 @@ body {
   text-align: center;
 }
 
+nav {
+  margin: 20px 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav a {
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: #0056b3;
+}
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 1rem 0;
@@ -110,5 +132,9 @@ body {
   }
   .barProgres-text {
     font-size: 0.8rem; /* Anda dapat menyesuaikan ukuran font untuk layar kecil */
+  }
+  nav {
+    flex-direction: column;
+    gap: 10px 0;
   }
 }
