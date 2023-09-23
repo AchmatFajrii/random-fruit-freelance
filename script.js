@@ -94,13 +94,13 @@ const displayData = (selectorPrefix, dataArray) => {
   const seed = generateSeed();
 
   const extendedData = [];
-  while (extendedData.length < dataArray.length * 10) {
+  while (extendedData.length < dataArray.length * 500) {
     // Dua kali panjang data asli untuk memastikan cukup data
     extendedData.push(...dataArray);
   }
   const randomizedData = acakArray(seed, extendedData).slice(
     0,
-    dataArray.length * 10
+    dataArray.length * 500
   );
   randomizedData.forEach((data, idx) => {
     const element = document.querySelector(`#${selectorPrefix}${idx + 1}`);
@@ -118,13 +118,12 @@ const setBarColor = (persen) => {
 };
 
 function generateBarProgresSeed(id) {
-  // Kita hanya membutuhkan bagian numerik dari ID untuk menghasilkan seed
   const numberPart = parseInt(id.replace("barProgres", ""), 10);
-  return numberPart;
+  return generateSeed() + numberPart;
 }
 
 const displayBarProgres = () => {
-  const barProgresElements = document.querySelectorAll(".barProgres"); // Ambil semua elemen barProgres
+  const barProgresElements = document.querySelectorAll(".barProgres");
 
   barProgresElements.forEach((element) => {
     const seed = generateBarProgresSeed(element.id);
@@ -153,10 +152,11 @@ const displayBarProgres = () => {
 
 // Fungsi utama untuk menampilkan buah, waktu, dan persentase berdasarkan waktu saat ini.
 function tampilkanDataBerdasarkanWaktu() {
+  console.log("Memperbarui data...");
   displayData("buah", buahBuahan);
   displayData("waktu", updateWaktu);
   displayData("persen", daftarPersen);
-  displayBarProgres();
+  displayBarProgres(); // Pastikan bar progres di-update
 
   // Mengubah warna latar belakang berdasarkan buah pertama yang terpilih.
   const seluruhBuah = acakArray(generateSeed(), buahBuahan);
@@ -166,10 +166,7 @@ function tampilkanDataBerdasarkanWaktu() {
 
 // Fungsi untuk menentukan kapan fungsi tampilkanBuahBerdasarkanWaktu() akan dipanggil kembali berdasarkan modeUpdate.
 function aturTimerBerdasarkanMode() {
-  setTimeout(() => {
-    tampilkanBuahBerdasarkanWaktu();
-    aturTimerBerdasarkanMode();
-  }, TIMEOUTS[modeUpdate]);
+  setInterval(tampilkanDataBerdasarkanWaktu, TIMEOUTS[modeUpdate]);
 }
 
 // Memulai program dengan menampilkan buah, waktu, dan persentase berdasarkan waktu saat ini, dan menentukan timer untuk pembaruan selanjutnya.
